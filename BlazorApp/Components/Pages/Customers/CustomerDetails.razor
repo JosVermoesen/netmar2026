@@ -1,0 +1,95 @@
+@page "/customer/{Id:int}"
+
+@using BlazorApp.Services
+@inject CustomerApiClient Api
+
+<h3>Customer @Id</h3>
+
+@if (_isLoading)
+{
+    <p>Loading…</p>
+}
+else if (_error is not null)
+{
+    <p class="text-danger">@_error</p>
+}
+else if (_customer is null)
+{
+    <p>No customer found.</p>
+}
+else
+{
+    <section class="mb-3">
+        <h4>@_customer.A100</h4>
+        <p>
+            @_customer.A104 @(_customer.A105)<br />
+            @_customer.A107 @_customer.A108<br />
+            VAT/ID: @_customer.A161<br />
+            Email: @_customer.V224
+        </p>
+    </section>
+
+    <section>
+        <h4>Invoices (@_customer.VsoftCustomerInvoices.Count)</h4>
+
+        @if (_customer.VsoftCustomerInvoices.Count == 0)
+        {
+            <p>No invoices.</p>
+        }
+        else
+        {
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th>Number (v033)</th>
+                    <th>Date (v035)</th>
+                    <th class="text-end">Amount (v037)</th>
+                    <th>Currency (vs03)</th>
+                    <th>Code (v038)</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var invoice in _customer.VsoftCustomerInvoices)
+                {
+                    <tr>
+                        <td>@invoice.V033</td>
+                        <td>@invoice.V035</td>
+                        <td class="text-end">@invoice.V037</td>
+                        <td>@invoice.Vs03</td>
+                        <td>@invoice.V038</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+    </section>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private CustomerApiClient.CustomerResponse? _customer;
+    private bool _isLoading = true;
+    private string? _error;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _isLoading = true;
+        _error = null;
+        _customer = null;
+
+        try
+        {
+            _customer = await Api.GetCustomerAsync(Id);
+        }
+        catch (Exception ex)
+        {
+            _error = ex.Message;
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+}

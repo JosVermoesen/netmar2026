@@ -1,0 +1,14 @@
+@if (supplier) {
+<mat-card
+  appearance="raised"
+  routerLink="/supplier/{{supplier.id}}"
+  class="supplier-card"
+>
+  <mat-card-content class="mt-23">
+    <h2 class="text-sm font-semibold uppercase">
+      {{supplier.a100}} {{supplier.a101}}
+    </h2>
+    <p class="font-light">{{supplier.a107}} {{supplier.a108}}</p>
+  </mat-card-content>
+</mat-card>
+}

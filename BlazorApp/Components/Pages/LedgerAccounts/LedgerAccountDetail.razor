@@ -1,0 +1,98 @@
+@page "/ledgeraccount/{Id:int}"
+
+@using BlazorApp.Services
+@inject LedgerAccountApiClient ApiClient
+
+<PageTitle>Ledger account @LedgerAccount?.V019</PageTitle>
+
+<h3>Ledger account @LedgerAccount?.V019</h3>
+
+@if (IsLoading)
+{
+    <p>Loading...</p>
+}
+else if (LedgerAccount is null)
+{
+    <p>Ledger account not found.</p>
+}
+else
+{
+    <div class="mb-3">
+        <dl class="row">
+            <dt class="col-sm-2">Number (v019)</dt>
+            <dd class="col-sm-10">@LedgerAccount.V019</dd>
+
+            <dt class="col-sm-2">Description (v020)</dt>
+            <dd class="col-sm-10">@LedgerAccount.V020</dd>
+
+            <dt class="col-sm-2">Dece028</dt>
+            <dd class="col-sm-10">@LedgerAccount.Dece028</dd>
+
+            <dt class="col-sm-2">Dece029</dt>
+            <dd class="col-sm-10">@LedgerAccount.Dece029</dd>
+
+            <dt class="col-sm-2">Dece030</dt>
+            <dd class="col-sm-10">@LedgerAccount.Dece030</dd>
+
+            <dt class="col-sm-2">Dece031</dt>
+            <dd class="col-sm-10">@LedgerAccount.Dece031</dd>
+        </dl>
+    </div>
+
+    <h4>Entries</h4>
+
+    @if (LedgerAccount.VsoftLedgers is null || LedgerAccount.VsoftLedgers.Count == 0)
+    {
+        <p>No ledger entries.</p>
+    }
+    else
+    {
+        <table class="table table-sm table-striped">
+            <thead>
+            <tr>
+                <th>Date (v066)</th>
+                <th>Doc (v033)</th>
+                <th>Ref (v038)</th>
+                <th>Description (v067)</th>
+                <th class="text-end">Amount (dece068)</th>
+                <th>Account (v069)</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var entry in LedgerAccount.VsoftLedgers)
+            {
+                <tr>
+                    <td>@entry.V066</td>
+                    <td>@entry.V033</td>
+                    <td>@entry.V038</td>
+                    <td>@entry.V067</td>
+                    <td class="text-end">@entry.Dece068</td>
+                    <td>@entry.V069</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private LedgerAccountApiClient.LedgerAccountResponse? LedgerAccount { get; set; }
+    private bool IsLoading { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        IsLoading = true;
+
+        try
+        {
+            LedgerAccount = await ApiClient.GetLedgerAccountAsync(Id);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+}

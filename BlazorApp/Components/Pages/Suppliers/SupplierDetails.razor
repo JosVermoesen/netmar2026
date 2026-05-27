@@ -1,0 +1,97 @@
+@page "/supplier/{Id:int}"
+
+@using BlazorApp.Services
+@inject SupplierApiClient Api
+
+<h3>Supplier @Id</h3>
+
+@if (_isLoading)
+{
+    <p>Loading…</p>
+}
+else if (_error is not null)
+{
+    <p class="text-danger">@_error</p>
+}
+else if (_supplier is null)
+{
+    <p>No supplier found.</p>
+}
+else
+{
+    <section class="mb-3">
+        <h4>@_supplier.A100</h4>
+        <p>
+            @_supplier.A104 @(_supplier.A105)<br />
+            @_supplier.A107 @_supplier.A108<br />
+            VAT/ID: @_supplier.A161<br />
+            Email: @_supplier.V224<br />
+            Phone: @_supplier.A10a<br />
+            Mobile: @_supplier.Vs02
+        </p>
+    </section>
+
+    <section>
+        <h4>Invoices (@_supplier.VsoftSupplierInvoices.Count)</h4>
+
+        @if (_supplier.VsoftSupplierInvoices.Count == 0)
+        {
+            <p>No invoices.</p>
+        }
+        else
+        {
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th>Number (v033)</th>
+                    <th>Date (v035)</th>
+                    <th class="text-end">Amount (v037)</th>
+                    <th>Currency (vs03)</th>
+                    <th>Code (v038)</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var inv in _supplier.VsoftSupplierInvoices)
+                {
+                    <tr>
+                        <td>@inv.V033</td>
+                        <td>@inv.V035</td>
+                        <td class="text-end">@inv.V037</td>
+                        <td>@inv.Vs03</td>
+                        <td>@inv.V038</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+    </section>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private SupplierApiClient.SupplierResponse? _supplier;
+    private bool _isLoading = true;
+    private string? _error;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _isLoading = true;
+        _error = null;
+        _supplier = null;
+
+        try
+        {
+            _supplier = await Api.GetSupplierAsync(Id);
+        }
+        catch (Exception ex)
+        {
+            _error = ex.Message;
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+}

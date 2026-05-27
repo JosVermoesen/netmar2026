@@ -1,0 +1,14 @@
+@if (customer) {
+<mat-card
+  appearance="raised"
+  routerLink="/customer/{{customer.id}}"
+  class="customer-card"
+>
+  <mat-card-content class="mt-23">
+    <h2 class="text-sm font-semibold uppercase">
+      {{customer.a100}} {{customer.a101}} {{customer.a125}} {{customer.a127}}
+    </h2>
+    <p class="font-light">{{customer.a107}}</p>
+  </mat-card-content>
+</mat-card>
+}

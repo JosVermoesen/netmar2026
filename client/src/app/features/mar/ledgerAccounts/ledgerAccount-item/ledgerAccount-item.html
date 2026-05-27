@@ -1,0 +1,14 @@
+@if (ledgerAccount) {
+<mat-card
+  appearance="raised"
+  routerLink="/ledgeraccount/{{ledgerAccount.id}}"
+  class="ledgerAccount-card"
+>
+  <mat-card-content class="mt-23">
+    <h2 class="text-sm font-semibold uppercase">
+      {{ledgerAccount.v019}} {{ledgerAccount.v020}}
+    </h2>
+    <p class="font-light">nothing yet</p>
+  </mat-card-content>
+</mat-card>
+}
