@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatDivider } from '@angular/material/divider';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
@@ -11,14 +11,13 @@ import { SupplierService } from '../../../../core/services/supplier-service';
 @Component({
   selector: 'app-suppliers-filters-dialog',
   imports: [
-    CommonModule,
     ScrollingModule,
     MatDivider,
     MatSelectionList,
     MatListOption,
     MatButton,
-    FormsModule,
-  ],
+    FormsModule
+],
   templateUrl: './suppliers-filters-dialog.html',
   styleUrl: './suppliers-filters-dialog.scss',
 })

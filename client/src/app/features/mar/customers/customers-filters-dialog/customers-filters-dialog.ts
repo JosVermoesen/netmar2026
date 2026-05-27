@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatDivider } from '@angular/material/divider';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
@@ -11,14 +11,13 @@ import { CustomerService } from '../../../../core/services/customer-service';
 @Component({
   selector: 'app-customers-filters-dialog',
   imports: [
-    CommonModule,
     ScrollingModule,
     MatDivider,
     MatSelectionList,
     MatListOption,
     MatButton,
-    FormsModule,
-  ],
+    FormsModule
+],
   templateUrl: './customers-filters-dialog.html',
   styleUrl: './customers-filters-dialog.scss',
 })
