@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Product } from '../../shared/models/product';
 import { ShopService } from '../../core/services/shop-service';
 import { ProductItem } from './product-item/product-item';
@@ -17,6 +17,7 @@ import { ShopParams } from '../../shared/models/shopParams';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Pagination } from '../../shared/models/pagination';
 import { FormsModule } from '@angular/forms';
+import { EmptyState } from '../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-shop',
@@ -30,6 +31,7 @@ import { FormsModule } from '@angular/forms';
     MatMenuTrigger,
     MatPaginator,
     FormsModule,
+    EmptyState
   ],
   templateUrl: './shop.html',
   styleUrl: './shop.scss',
@@ -37,7 +39,9 @@ import { FormsModule } from '@angular/forms';
 export class Shop implements OnInit {
   private shopService = inject(ShopService);
   private dialogService = inject(MatDialog);
-  products?: Pagination<Product>;
+
+  products = signal<Pagination<Product> | undefined>(undefined);
+
   sortOptions = [
     { name: 'Alphabetical', value: 'name' },
     { name: 'Price: Low to High', value: 'priceAsc' },
@@ -58,14 +62,17 @@ export class Shop implements OnInit {
 
   getProducts() {
     this.shopService.getProducts(this.shopParams).subscribe({
-      next: (response) => (this.products = response),
+      next: (response) => this.products.set(response),
       error: (error) => console.log('Error fetching products:', error),
     });
   }
 
   onSearchChange() {
     this.shopParams.pageNumber = 1; // Reset to first page on search change
-    this.getProducts();
+    this.shopService.getProducts(this.shopParams).subscribe({
+      next: (response) => this.products.set(response),
+      error: (error) => console.log('Error fetching products:', error),
+    });
   }
 
   handlePageEvent(event: PageEvent) {
