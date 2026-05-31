@@ -107,13 +107,13 @@ This command will set up Tailwind CSS in your Angular project, including the nec
 - [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - solidity - Solidity language support for Visual Studio Code
 
-## Updating to latest Angular 20
+## Updating to latest Angular 21
 
-This app is now on Angular 20.
+This app is now on Angular 21.
 
-### update app to latest Angular 20
+### update app to latest Angular 21
 
-`ng update @angular/cli@20 @angular/core@20`
+`ng update @angular/cli@21 @angular/core@21`
 
 ### update from older Angular versions to the latest
 
