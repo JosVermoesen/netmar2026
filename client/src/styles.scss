@@ -1,37 +1,36 @@
 @use "@angular/material" as mat;
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 html {
   font-size: 12px;
 }
 
 .container {
-  @apply mx-auto max-w-screen-lg px-4 py-2;
-}
-
-.text-primary {
-  color: rgb(0, 47, 255);
-}
-
-button.match-input-height {
-  height: var(--mat-form-field-container-height) !important;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 64rem;
+  padding: 0.5rem 1rem;
 }
 
 .mdc-notched-outline__notch {
   border-right-style: none !important;
 }
 
-.mat-mdc-snack-bar-container.snack-error {
-  --mdc-snackbar-container-color: red;
-  --mat-snack-bar-button-color: #fff;
-  --mdc-snackbar-supporting-text-color: #fff;
+.snack-error {
+  @include mat.snack-bar-overrides((
+    (
+      container-color: red,
+      button-color: white,
+      supporting-text-color: white,
+    )
+  ));
 }
 
-.mat-mdc-snack-bar-container.snack-success {
-  --mdc-snackbar-container-color: green;
-  --mat-snack-bar-button-color: #fff;
-  --mdc-snackbar-supporting-text-color: #fff;
+.snack-success {
+  @include mat.snack-bar-overrides((
+    (
+      container-color: green,
+      button-color: white,
+      supporting-text-color: white,
+    )
+  ));
 }
