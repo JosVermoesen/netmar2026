@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -17,6 +17,7 @@ import { CustomerService } from '../../../core/services/customer-service';
 import { CustomerParams } from '../../../shared/models/customerParams';
 import { CustomersFiltersDialog } from './customers-filters-dialog/customers-filters-dialog';
 import { Pagination } from '../../../shared/models/pagination';
+import { EmptyState } from '../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-customers-component',
@@ -30,6 +31,7 @@ import { Pagination } from '../../../shared/models/pagination';
     MatMenuTrigger,
     MatPaginator,
     FormsModule,
+    EmptyState
   ],
   templateUrl: './customers.html',
   styleUrl: './customers.scss',
@@ -37,7 +39,8 @@ import { Pagination } from '../../../shared/models/pagination';
 export class Customers implements OnInit {
   private customerService = inject(CustomerService);
   private dialogService = inject(MatDialog);
-  customers?: Pagination<Customer>;
+  customers = signal<Pagination<Customer> | undefined>(undefined);
+
   sortOptions = [
     { name: 'Alphabetical A to Z', value: 'asc' },
     { name: 'Alphabetical Z to A', value: 'desc' },
@@ -57,7 +60,7 @@ export class Customers implements OnInit {
 
   getCustomers() {
     this.customerService.getCustomers(this.customerParams).subscribe({
-      next: (response) => (this.customers = response),
+      next: (response) => this.customers.set(response),
       error: (error) => console.log('Error fetching customers:', error),
     });
   }
@@ -68,7 +71,12 @@ export class Customers implements OnInit {
   }
 
   handlePageEvent(event: PageEvent) {
-    this.customerParams.pageNumber = event.pageIndex + 1; // PageEvent is zero-based
+    this.customerParams.pageNumber = event.pageIndex + 1;
+    this.customerService.getCustomers(this.customerParams).subscribe({
+      next: (response) => this.customers.set(response),
+      error: (error) => console.log('Error fetching customers:', error),
+    });
+    
     this.customerParams.pageSize = event.pageSize;
     this.getCustomers();
   }

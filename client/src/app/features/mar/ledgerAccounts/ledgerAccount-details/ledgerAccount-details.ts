@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDivider } from '@angular/material/divider';
 import { LedgerAccountService } from '../../../../core/services/ledgerAccount-service';
@@ -13,7 +13,7 @@ import { LedgerAccount } from '../../../../shared/models/ledgerAccount';
 export class LedgerAccountDetails implements OnInit {
   private ledgerAccountService = inject(LedgerAccountService);
   private activatedRoute = inject(ActivatedRoute);
-  ledgerAccount?: LedgerAccount;
+  ledgerAccount = signal<LedgerAccount | undefined>(undefined);
 
   ngOnInit(): void {
     this.loadLedgerAccount();
@@ -24,7 +24,7 @@ export class LedgerAccountDetails implements OnInit {
     if (!id) return;
 
     this.ledgerAccountService.getLedgerAccount(+id).subscribe({
-      next: (ledgerAccount) => (this.ledgerAccount = ledgerAccount),
+      next: (ledgerAccount) => this.ledgerAccount.set(ledgerAccount),
       error: (error) => console.error('Error loading ledgerAccount:', error),
       complete: () => console.log(this.ledgerAccount),
     });

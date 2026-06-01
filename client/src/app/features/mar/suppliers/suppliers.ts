@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -17,6 +17,7 @@ import { SupplierService } from '../../../core/services/supplier-service';
 import { Supplier } from '../../../shared/models/supplier';
 import { SupplierParams } from '../../../shared/models/supplierParams';
 import { SuppliersFiltersDialog } from './supplier-filters-dialog/suppliers-filters-dialog';
+import { EmptyState } from '../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-suppliers-component',
@@ -30,6 +31,7 @@ import { SuppliersFiltersDialog } from './supplier-filters-dialog/suppliers-filt
     MatMenuTrigger,
     MatPaginator,
     FormsModule,
+    EmptyState
   ],
   templateUrl: './suppliers.html',
   styleUrl: './suppliers.scss',
@@ -37,7 +39,8 @@ import { SuppliersFiltersDialog } from './supplier-filters-dialog/suppliers-filt
 export class Suppliers implements OnInit {
   private supplierService = inject(SupplierService);
   private dialogService = inject(MatDialog);
-  suppliers?: Pagination<Supplier>;
+  suppliers = signal<Pagination<Supplier> | undefined>(undefined);
+
   sortOptions = [
     { name: 'Alphabetical A to Z', value: 'asc' },
     { name: 'Alphabetical Z to A', value: 'desc' },
@@ -56,7 +59,7 @@ export class Suppliers implements OnInit {
 
   getSuppliers() {
     this.supplierService.getSuppliers(this.supplierParams).subscribe({
-      next: (response) => (this.suppliers = response),
+      next: (response) => this.suppliers.set(response),
       error: (error) => console.log('Error fetching suppliers:', error),
     });
   }

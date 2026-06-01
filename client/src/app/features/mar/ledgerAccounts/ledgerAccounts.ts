@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -16,6 +16,7 @@ import { LedgerAccountService } from '../../../core/services/ledgerAccount-servi
 import { LedgerAccount } from '../../../shared/models/ledgerAccount';
 import { LedgerAccountParams } from '../../../shared/models/ledgerAccountParams';
 import { LedgerAccountItem } from './ledgerAccount-item/ledgerAccount-item';
+import { EmptyState } from '../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-legerAccounts-component',
@@ -29,6 +30,7 @@ import { LedgerAccountItem } from './ledgerAccount-item/ledgerAccount-item';
     MatMenuTrigger,
     MatPaginator,
     FormsModule,
+    EmptyState
   ],
   templateUrl: './ledgerAccounts.html',
   styleUrl: './ledgerAccounts.scss',
@@ -36,7 +38,8 @@ import { LedgerAccountItem } from './ledgerAccount-item/ledgerAccount-item';
 export class LedgerAccounts implements OnInit {
   private ledgerAccountService = inject(LedgerAccountService);
   private dialogService = inject(MatDialog);
-  ledgerAccounts?: Pagination<LedgerAccount>;
+  ledgerAccounts = signal<Pagination<LedgerAccount> | undefined>(undefined);
+
   sortOptions = [
     { name: 'Alphabetical A to Z', value: 'asc' },
     { name: 'Alphabetical Z to A', value: 'desc' },
@@ -56,7 +59,7 @@ export class LedgerAccounts implements OnInit {
     this.ledgerAccountService
       .getLedgerAccounts(this.ledgerAccountParams)
       .subscribe({
-        next: (response) => (this.ledgerAccounts = response),
+        next: (response) => this.ledgerAccounts.set(response),
         error: (error) => console.log('Error fetching ledgerAccounts:', error),
       });
   }

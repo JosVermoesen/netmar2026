@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { MatDivider } from '@angular/material/divider';
@@ -14,7 +14,7 @@ import { Customer } from '../../../../shared/models/customer';
 export class CustomerDetails implements OnInit {
   private customerService = inject(CustomerService);
   private activatedRoute = inject(ActivatedRoute);
-  customer?: Customer;
+  customer = signal<Customer | undefined>(undefined);
 
   ngOnInit(): void {
     this.loadCustomer();
@@ -25,7 +25,7 @@ export class CustomerDetails implements OnInit {
     if (!id) return;
 
     this.customerService.getCustomer(+id).subscribe({
-      next: (customer) => (this.customer = customer),
+      next: (customer) => this.customer.set(customer),
       error: (error) => console.error('Error loading customer:', error),
       complete: () => console.log(this.customer),
     });
