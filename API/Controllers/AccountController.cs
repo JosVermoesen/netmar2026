@@ -11,6 +11,20 @@ namespace API.Controllers;
 
 public class AccountController(SignInManager<AppUser> signInManager) : BaseApiController
 {
+    private const string mailSubject = @"Nieuwe gebruikersregistratie";
+    private const string bodyText = @"Hallo, U registreerde zich zo-even voor onze website rv.be
+                                Na controle van deze registratie, ontvangt U als klant mailbevestiging en toegang tot uw functies.
+                                Controle op: Identiteitskaart rijksregister nummer: ";
+    private const string bodyHtml = @"<p>Hallo,<br>
+                <p>U registreerde zich zo-even voor onze websites rv.be. 
+                Na controle van deze registratie, ontvangt U als klant mailbevestiging en toegang tot uw functies.<br>
+                <p>Controle op:<br> * Identiteitskaart rijksregister nummer: ";
+
+    private const string mailSubject2Way = @"2Way checkup";
+    private const string bodyText2Way = @"Hallo, Uw login verwacht binnen de 5 minuten een bevestigingscode bestaande uit 6 cijfers.";
+    private const string bodyHtml2Way = @"<p>Hallo,<br>
+                <p>Uw login verwacht binnen de 5 minuten een bevestigingscode bestaande uit 6 cijfers.<br><p>";
+
     [HttpPost("register")]
     public async Task<ActionResult> Register(RegisterDto registerDto)
     {
@@ -86,5 +100,9 @@ public class AccountController(SignInManager<AppUser> signInManager) : BaseApiCo
         if (!result.Succeeded) return BadRequest("Problem updating address");
 
         return Ok(user.Address.ToDto());
+
     }
+
+    private void SendMail2WayCheck(AppUser aUser, string aString)
+    { }
 }

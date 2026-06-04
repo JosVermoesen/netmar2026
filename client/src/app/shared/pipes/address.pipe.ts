@@ -18,3 +18,5 @@ export class AddressPipe implements PipeTransform {
     }
   }
 }
+// ng g p shared/pipes/address --dry-run
+// ng g p shared/pipes/address --skip-tests

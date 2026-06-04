@@ -26,6 +26,7 @@ import { CartService } from '../../core/services/cart.service';
 import { CurrencyPipe } from '@angular/common';
 import { CheckoutReview } from './checkout-review/checkout-review';
 import { StatusChangeEvent } from '@angular/forms';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-checkout',
@@ -38,6 +39,7 @@ import { StatusChangeEvent } from '@angular/forms';
     CheckoutDeliveryComponent,
     CheckoutReview,
     CurrencyPipe,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './checkout.html',
   styleUrl: './checkout.scss',
@@ -133,6 +135,7 @@ export class Checkout implements OnInit, OnDestroy {
 
   async confirmPayment(stepper: MatStepper) {
     this.loading.set(true);
+
     try {
       const confirmationToken = this.confirmationToken();
       if (confirmationToken) {

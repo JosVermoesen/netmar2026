@@ -17,3 +17,5 @@ export class PaymentCardPipe implements PipeTransform {
     }
   }
 }
+// ng g p shared/pipes/payment-card --dry-run
+// ng g p shared/pipes/payment-card --skip-tests
