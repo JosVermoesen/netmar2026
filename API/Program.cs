@@ -25,9 +25,13 @@ if (!string.IsNullOrWhiteSpace(redisConnectionString))
     try
     {
         var configuration = ConfigurationOptions.Parse(redisConnectionString, true);
-        configuration.AbortOnConnectFail = false;
+        configuration.AbortOnConnectFail = true;
+        configuration.ConnectTimeout = 2000;
+        configuration.SyncTimeout = 2000;
 
         var multiplexer = ConnectionMultiplexer.Connect(configuration);
+        _ = multiplexer.GetDatabase().Ping();
+
         builder.Services.AddSingleton<IConnectionMultiplexer>(multiplexer);
         builder.Services.AddSingleton<ICartService, CartService>();
         Console.WriteLine("Redis connected. Using Redis cart store.");

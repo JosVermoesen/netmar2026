@@ -3,7 +3,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Cart, CartItem } from '../../shared/models/cart';
 import { Product } from '../../shared/models/product';
-import { firstValueFrom, map, tap } from 'rxjs';
+import { catchError, firstValueFrom, map, of, tap } from 'rxjs';
 import { DeliveryMethod } from '../../shared/models/deliveryMethod';
 
 @Injectable({
@@ -36,11 +36,15 @@ export class CartService {
     };
   });
 
-  getCart(id: string) {    
+  getCart(id: string) {
     return this.http.get<Cart>(this.baseUrl + 'cart?id=' + id).pipe(
       map((cart) => {
         this.cart.set(cart);
         return cart;
+      }),
+      catchError(() => {
+        this.clearCartState();
+        return of(null);
       })
     );
   }
@@ -48,6 +52,7 @@ export class CartService {
   setCart(cart: Cart) {
     return this.http.post<Cart>(this.baseUrl + 'cart', cart).subscribe({
       next: (cart) => this.cart.set(cart),
+      error: () => this.clearCartState(),
     });
   }
 
@@ -81,13 +86,18 @@ export class CartService {
   deleteCart() {
     this.http.delete(this.baseUrl + 'cart?id=' + this.cart()?.id).subscribe({
       next: () => {
-        localStorage.removeItem('cart2025_id');
-        this.cart.set(null);
+        this.clearCartState();
       },
+      error: () => this.clearCartState(),
     });
   }
 
   // All private methods below this line
+
+  private clearCartState() {
+    localStorage.removeItem('cart2025_id');
+    this.cart.set(null);
+  }
 
   private addOrUpdateItem(
     items: CartItem[],
