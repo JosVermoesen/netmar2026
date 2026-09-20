@@ -33,7 +33,7 @@ There is no static file middleware, so copying Angular files into wwwroot alone 
 
 Redis is configured as localhost in production settings
 See appsettings.json:7.
-On Plesk hosting this usually fails unless Redis is installed on the same server, and your app may crash at startup.
+On Plesk hosting this usually fails unless Redis is installed on the same server. The API now falls back to in-memory cart storage when Redis is unavailable.
 
 Secrets are committed in appsettings
 See appsettings.json:7.
@@ -74,14 +74,14 @@ ASP.NET Core module available (AspNetCoreModuleV2)
 Environment variables in Plesk:
 ASPNETCORE_ENVIRONMENT = Production
 ConnectionStrings__DefaultConnection = your SQL connection
-ConnectionStrings__Redis = remote redis or disable redis usage
+ConnectionStrings__Redis = remote redis (optional)
 StripeSettings__PublishableKey = key
 StripeSettings__SecretKey = key
 Permissions: IIS user can read publish folder, and write logs folder if enabled
 Critical project adjustments before production
 
 Add static file hosting middleware in API so Angular routes work.
-Make Redis optional or use a real hosted Redis endpoint.
+Use a real hosted Redis endpoint when available, or run with in-memory cart fallback.
 Rotate exposed secrets and remove them from appsettings.json:7.
 If you want, I can now make the code changes for you in one pass:
 

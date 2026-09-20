@@ -19,14 +19,30 @@ builder.Services.AddDbContext<CompanyContext>(options =>
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<AutoMapperProfiles>());
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddCors();
-builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
+var redisConnectionString = builder.Configuration.GetConnectionString("Redis");
+if (!string.IsNullOrWhiteSpace(redisConnectionString))
 {
-    var connString = builder.Configuration.GetConnectionString("Redis")
-        ?? throw new Exception("Redis connection string is not configured.");
-    var configuration = ConfigurationOptions.Parse(connString, true);
-    return ConnectionMultiplexer.Connect(configuration);
-});
-builder.Services.AddSingleton<ICartService, CartService>();
+    try
+    {
+        var configuration = ConfigurationOptions.Parse(redisConnectionString, true);
+        configuration.AbortOnConnectFail = false;
+
+        var multiplexer = ConnectionMultiplexer.Connect(configuration);
+        builder.Services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+        builder.Services.AddSingleton<ICartService, CartService>();
+        Console.WriteLine("Redis connected. Using Redis cart store.");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Redis unavailable. Falling back to in-memory cart store. {ex.Message}");
+        builder.Services.AddSingleton<ICartService, InMemoryCartService>();
+    }
+}
+else
+{
+    Console.WriteLine("Redis connection string not configured. Using in-memory cart store.");
+    builder.Services.AddSingleton<ICartService, InMemoryCartService>();
+}
 
 builder.Services.AddAuthorization();
 builder.Services.AddIdentityApiEndpoints<AppUser>()

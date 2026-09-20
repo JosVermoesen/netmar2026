@@ -68,7 +68,23 @@ dotnet dev-certs https --trust (if not working then do --clean first)
 
 ## Publishing
 
+```bash
+
 dotnet publish -c Release
+  
+```
+
+### Fallback option if host won’t install runtime
+
+You can try self-contained publish for Windows:
+
+```bash
+
+dotnet publish API.csproj -c Release -f net10.0 -r win-x64 --self-contained true
+  
+```
+
+This reduces dependency on server-installed runtime, but IIS hosting module compatibility still matters.
 
 ## dotnet-ef Entity Framework tool
 
@@ -164,6 +180,35 @@ redis-cli GET keyvalue
 ```
 
 Which will show you the value of the key.
+
+### Example appsettings.Development.json
+
+```json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Information"
+    }
+  },
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost\\SQLEXPRESS;Database=netmar2026;TrustServerCertificate=True;Trusted_Connection=True;",
+    "Redis": "localhost:6379"
+  }
+}
+```
+
+And set Redis to "" in your `appsettings.Development.json` if you want to disable it and use in-memory caching instead. Read also the notes below for more information about the fallback behavior in production when Redis is not available.
+
+### Production without Redis
+
+If Redis is unavailable or not configured, the API now falls back to an in-memory cart service.
+
+Notes:
+
+* The API keeps running.
+* Cart data is temporary (lost on app restart/deploy and not shared across instances).
+* Configure a valid `ConnectionStrings:Redis` value to use persistent/distributed Redis carts again.
 
 ### Set ASPNETCORE_ENVIRONMENT
 
