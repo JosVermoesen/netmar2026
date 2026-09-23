@@ -67,8 +67,16 @@ app.UseCors(x =>
         "https://localhost:5003", "http://localhost:5003" // Blazor WASM dev
      ));
 
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<AppUser>(); // we use api/register and api/login endpoints
+// app.MapHub<NotificationHub>("/hub/notifications");
+app.MapFallbackToController("Index", "Fallback");
 
 try
 {
