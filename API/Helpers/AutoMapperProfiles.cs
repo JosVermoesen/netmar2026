@@ -11,7 +11,7 @@ using API.DTOs.VsoftContract;
 using API.DTOs.VsoftTelebibContract;
 using API.DTOs.VsoftCustomerInvoice;
 
-namespace Core.Helpers
+namespace API.Helpers
 {
     public class AutoMapperProfiles : Profile
     {

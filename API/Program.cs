@@ -1,6 +1,6 @@
+using API.Helpers;
 using API.MiddelWare;
 using Core.Entities;
-using Core.Helpers;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Services;
@@ -19,6 +19,7 @@ builder.Services.AddDbContext<CompanyContext>(options =>
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<AutoMapperProfiles>());
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddCors();
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 var redisConnectionString = builder.Configuration.GetConnectionString("Redis");
 if (!string.IsNullOrWhiteSpace(redisConnectionString))
 {

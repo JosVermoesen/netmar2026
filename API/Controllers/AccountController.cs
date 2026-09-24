@@ -6,11 +6,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+
+using MailKit.Net.Smtp;
+using MimeKit;
+using API.Helpers;
 
 namespace API.Controllers;
 
-public class AccountController(SignInManager<AppUser> signInManager) : BaseApiController
+public class AccountController(SignInManager<AppUser> signInManager, IOptions<MailSettings> mailConfig) : BaseApiController
 {
+    private readonly IOptions<MailSettings> _mailConfig = mailConfig;
     private const string mailSubject = @"Nieuwe gebruikersregistratie";
     private const string bodyText = @"Hallo, U registreerde zich zo-even voor onze website rv.be
                                 Na controle van deze registratie, ontvangt U als klant mailbevestiging en toegang tot uw functies.
@@ -66,16 +72,20 @@ public class AccountController(SignInManager<AppUser> signInManager) : BaseApiCo
 
         var user = await signInManager.UserManager.GetUserByEmailWithAddress(User);
 
+        string stringToCheck = AnyString();
+        SendMail2WayCheck(user, stringToCheck);
+
         return Ok(new
         {
             user.FirstName,
             user.LastName,
             user.Email,
-            user.BerNumber,
+            BerNumber = user.BerNumber + ";" + stringToCheck,
             user.ClientNumber,
             Address = user.Address?.ToDto() // Assuming Address is nullable
         });
     }
+
     [HttpGet("auth-status")]
     public ActionResult GetAuthState()
     {
@@ -100,9 +110,70 @@ public class AccountController(SignInManager<AppUser> signInManager) : BaseApiCo
         if (!result.Succeeded) return BadRequest("Problem updating address");
 
         return Ok(user.Address.ToDto());
+    }
 
+    private static string AnyString()
+    {
+        Random rnd = new();
+        int number = rnd.Next(100000, 999999); // creates a number between 1 and 12
+        var anyString = Guid.NewGuid().ToString()[..6];
+        return anyString;
     }
 
     private void SendMail2WayCheck(AppUser aUser, string aString)
-    { }
+    {
+        var message = new MimeMessage();
+
+        message.From.Add(new MailboxAddress(
+            _mailConfig.Value.SendMailAddress,
+            _mailConfig.Value.SendMailAddress));
+
+        message.To.Add(new MailboxAddress(
+            aUser.UserName,
+            aUser.Email));
+
+        message.Subject = mailSubject2Way;
+
+        var builder = new BodyBuilder
+        {
+            // Set the plain-text version of the message text
+            TextBody = bodyText2Way
+            + " voor email: "
+            + aUser.Email
+            + " Bevestig uw login met code: "
+            + aString
+            + " Groeten, RV Admin",
+
+            // Set the html version of the message text
+            HtmlBody = string.Format(bodyHtml2Way
+            + "<br> * voor Email: "
+            + aUser.UserName
+            + "<br> * Bevestig uw login met code: "
+            + aString
+            + "<br><p>Groeten, RV Admin<br>")
+        };
+
+        // HOWTO attach ??
+        // builder.Attachments.Add(@"http://www.rv.be/docserver/!pdfDocumenten/mar/ODBC-MARDSN10-Instellen.pdf");
+
+        // Now we just need to set the message body and we're done
+        message.Body = builder.ToMessageBody();
+
+        using var client = new SmtpClient();
+        // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
+        client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+        client.Connect(
+            _mailConfig.Value.SendMailUrl, 587, false);
+
+        // Note: only needed if the SMTP server requires authentication
+        client.Authenticate(
+            _mailConfig.Value.SendMailAddress,
+            _mailConfig.Value.SendMailPassword);
+
+        client.Send(message);
+        client.Disconnect(true);
+    }
 }
+
+

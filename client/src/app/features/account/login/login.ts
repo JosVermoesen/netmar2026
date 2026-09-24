@@ -45,7 +45,15 @@ export class Login {
     console.log('Login form submitted:', this.loginForm.value);
     this.accountService.login(this.loginForm.value).subscribe({
       next: (result: any) => {
-        this.accountService.getUserInfo().subscribe();
+        console.log('Login successful:', result);
+        this.accountService.getUserInfo().subscribe({
+          next: (user) => {
+            console.log('User info retrieved:', user);
+          },
+          error: (error) => {
+            console.error('Failed to retrieve user info:', error);
+          },
+        });
       },
       error: (error) => {
         console.error('Login failed', error);
