@@ -1,0 +1,11 @@
+<section id="fvf-iprivacy">
+  <div class="card">
+    <button pButton pRipple (click)="reNew()" label="Keuze opnieuw instellen" icon="pi pi-pencil" class="p-button-text"></button>
+    @if (contentfulItem) {
+      <div>
+        <br />
+        <div class="md-content" [innerHTML]="contentfulItem.fields['mdTextBody'] | mdToHtml"></div>
+      </div>
+    }
+  </div>
+</section>

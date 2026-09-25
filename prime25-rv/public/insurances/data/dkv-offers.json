@@ -1,0 +1,34 @@
+{
+  "data": [
+    {
+      "itemImageSrc": "insurances/galleria/offers/dkv/hospitalization-insurance.png",
+      "thumbnailImageSrc": "insurances/galleria/offers/dkv/hospitalization-insurances.png",
+      "alt": "Logo Hospitalisatie",
+      "title": "Hospitalisatie verzekering",
+      "youTubeVideo": "",
+      "message": "Hospitalisatie verzekering",
+      "url": "https://www.dkv.be/nl/particulier/verzekeringen/hospitalisatieverzekering?agent_id=990721&token=19958bqLUY606RDyy_KKxKUVtUPbcwkW4Egy76NOOJdalH-g99072134&utm_source=agent_990721&utm_campaign=purl_generator&product=34&products=34&product_category=34#dkv-34",
+      "offerIsInternal": false
+    },
+    {
+      "itemImageSrc": "insurances/galleria/offers/dkv/dental-insurance.png",
+      "thumbnailImageSrc": "insurances/galleria/offers/dkv/dental-insurances.png",
+      "alt": "Logo Tandverzekering",
+      "title": "Tandverzekering",
+      "youTubeVideo": "",
+      "message": "Tandverzekering",
+      "url": "https://www.dkv.be/nl/particulier/verzekeringen/tandverzekering?agent_id=990721&token=19959CBcB1Co-7E4BAiKg_nIa9ndfVgSFiEqAG63trrCSkKs99072164&utm_source=agent_990721&utm_campaign=purl_generator&product=64&products=64&product_category=64#dkv-64",
+      "offerIsInternal": false
+    },
+    {
+      "itemImageSrc": "insurances/galleria/offers/dkv/outpatient-care.png",
+      "thumbnailImageSrc": "insurances/galleria/offers/dkv/outpatient-cares.png",
+      "alt": "Logo Ambulante Zorgen",
+      "title": "Ambulante Zorgen",
+      "youTubeVideo": "",
+      "message": "Ambulante Zorgen",
+      "url": "https://www.dkv.be/nl/particulier/verzekeringen/verzekering-ambulante-kosten?agent_id=990721&token=199609qnTEBbqyZG1PxpBK4QwfhPpMlegsB3GT_PoQXfpnmE99072154&utm_source=agent_990721&utm_campaign=purl_generator&product=54&products=54&product_category=54#dkv-54",
+      "offerIsInternal": false
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+<div class="surface-card p-1 shadow-1 border-round w-full">
+  @if (validCode) {
+    <div>
+      <a class="btn btn-lg btn-danger btn-block" type="button" href="https://meet.google.com/sji-cdag-rid"
+        target="_blank">
+        Enter Office
+      </a>
+      <br><br>
+    </div>
+  }
+  @if (!validCode) {
+    <div>
+      @if (meetupForm) {
+        <div>
+          <form [formGroup]="meetupForm" (ngSubmit)="onSubmit()">
+            <label class="block text-900 font-medium mb-2" for="_meetCode">
+              Your access Code
+            </label>
+            <input pInputText class="w-full mb-3" formControlName="meetCode" type="text" id="_meetCode"
+              placeholder="MeetUp code">
+            <button class="w-full" pButton pRipple [disabled]="meetupForm.invalid" label="Start MeetUp" icon="pi pi-user">
+            </button>
+          </form>
+        </div>
+      }
+    </div>
+  }
+</div>

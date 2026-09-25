@@ -1,0 +1,135 @@
+{
+  "data": [
+    {
+      "itemImageSrc": "insurances/galleria/insurers/allianz1.jpg",
+      "thumbnailImageSrc": "insurances/galleria/insurers/allianz1s.jpg",
+      "alt": "Allianz Benelux Logo",
+      "title": "Allianz Benelux",
+      "url": "https://allianz.be",
+      "allowInsurerLink": true,
+      "offersUrl": "",
+      "offers": false
+    },
+    {
+      "itemImageSrc": "insurances/galleria/insurers/athora1.jpg",
+      "thumbnailImageSrc": "insurances/galleria/insurers/athora1s.jpg",
+      "alt": "Athora Logo",
+      "title": "Athora",
+      "url": "https://athora.com",
+      "allowInsurerLink": true,
+      "offersUrl": "",
+      "offers": false
+    },
+    {
+      "itemImageSrc": "insurances/galleria/insurers/axa1.jpg",
+      "thumbnailImageSrc": "insurances/galleria/insurers/axa1s.jpg",
+      "alt": "AXA Belgium Logo",
+      "title": "AXA Belgium",
+      "url": "https://axa.be",
+      "allowInsurerLink": true,
+      "offersUrl": "",
+      "offers": false
+    },
+    {
+      "itemImageSrc": "insurances/galleria/insurers/baloise1.jpg",
+      "thumbnailImageSrc": "insurances/galleria/insurers/baloise1s.jpg",
+      "alt": "Baloise Belgium Logo",
+      "title": "Baloise Belgium",
+      "url": "https://baloise.be",
+      "allowInsurerLink": true,
+      "offersUrl": "",
+      "offers": false
+    },
+
+    {
+      "itemImageSrc": "insurances/galleria/insurers/das1.png",
+      "thumbnailImageSrc": "insurances/galleria/insurers/das1s.png",
+      "alt": "DAS Rechtsbijstand Logo",
+      "title": "DAS Rechtsbijstand",
+      "url": "https://das.be",
+      "allowInsurerLink": true,
+      "offersUrl": "",
+      "offers": false
+    },
+    {
+      "itemImageSrc": "insurances/galleria/insurers/dkv1.png",
+      "thumbnailImageSrc": "insurances/galleria/insurers/dkv1s.png",
+      "alt": "DKV Belgium Logo",
+      "title": "DKV Belgium",
+      "url": "https://www.dkv.be/nl/dkv-insureme?agent_id=990721&token=19951g3JfjG8u9Gv1ca8AklGOfJrsmRxthzfdDAOp8FxA4yQ990721747&utm_source=agent_990721&utm_campaign=purl_generator&product=747&products=747&product_category=747#dkv-747",
+      "allowInsurerLink": true,
+      "offersUrl": "/dkv-offers",
+      "offers": true
+    },
+    {
+      "itemImageSrc": "insurances/galleria/insurers/euromex1.png",
+      "thumbnailImageSrc": "insurances/galleria/insurers/euromex1s.png",
+      "alt": "Euromex Rechtsbijstand Logo",
+      "title": "Euromex Rechtsbijstand",
+      "url": "https://www.euromex.be/",
+      "allowInsurerLink": true,
+      "offersUrl": "",
+      "offers": false
+    },
+    {
+      "itemImageSrc": "insurances/galleria/insurers/europ-assistance1.jpg",
+      "thumbnailImageSrc": "insurances/galleria/insurers/europ-assistance1s.jpg",
+      "alt": "Europ Assistance Logo",
+      "title": "Europ Assistance",
+      "url": "https://www.europ-assistance.be/reisverzekering?&AgtNum=roever",
+      "allowInsurerLink": true,
+      "offersUrl": "/ea-offers",
+      "offers": true
+    },
+    {
+      "itemImageSrc": "insurances/galleria/insurers/optimco1.jpg",
+      "thumbnailImageSrc": "insurances/galleria/insurers/optimco1s.jpg",
+      "alt": "Optimco Logo",
+      "title": "Optimco",
+      "url": "https//www.optimco.be",
+      "allowInsurerLink": true,
+      "offersUrl": "",
+      "offers": false
+    },
+    {
+      "itemImageSrc": "insurances/galleria/insurers/patronale1.jpg",
+      "thumbnailImageSrc": "insurances/galleria/insurers/patronale1s.jpg",
+      "alt": "Patronale Life Logo",
+      "title": "Patronale Life",
+      "url": "https://patronale-life.be",
+      "allowInsurerLink": true,
+      "offersUrl": "",
+      "offers": false
+    },
+    {
+      "itemImageSrc": "insurances/galleria/insurers/pnp1.jpg",
+      "thumbnailImageSrc": "insurances/galleria/insurers/pnp1s.jpg",
+      "alt": "Piètte & Partners Logo",
+      "title": "Piètte & Partners",
+      "url": "https://www.pnp.be",
+      "allowInsurerLink": true,
+      "offersUrl": "",
+      "offers": false
+    },
+    {
+      "itemImageSrc": "insurances/galleria/insurers/bttb1.jpg",
+      "thumbnailImageSrc": "insurances/galleria/insurers/bttb1s.jpg",
+      "alt": "Tariferingsbureau Logo",
+      "title": "Tariferingsbureau",
+      "url": "https://online.bt-tb.be",
+      "allowInsurerLink": false,
+      "offersUrl": "",
+      "offers": false
+    },
+    {
+      "itemImageSrc": "insurances/galleria/insurers/vivium1.jpg",
+      "thumbnailImageSrc": "insurances/galleria/insurers/vivium1s.jpg",
+      "alt": "Vivium Logo",
+      "title": "Vivium",
+      "url": "https://vivium.be",
+      "allowInsurerLink": false,
+      "offersUrl": "",
+      "offers": false
+    }
+  ]
+}

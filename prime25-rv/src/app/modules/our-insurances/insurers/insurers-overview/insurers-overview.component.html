@@ -1,0 +1,45 @@
+<div class="insurers-overview-page">
+  @if (insurers) {
+    <div style="max-width: 800px; margin: 0 auto;">
+        <div class="card">
+          <p-galleria [value]="insurers" [autoPlay]="autoPlay" [transitionInterval]="4000" [circular]="false" [responsiveOptions]="galleriaResponsiveOptions" [style]="{ width: '100%', display: 'block' }" [containerStyle]="{ width: '100%', 'max-width': '800px', margin: '0 auto' }" [numVisible]="6" [circular]="true">
+            <ng-template #item let-item>
+              <img [src]="item.itemImageSrc" style="width: 100%; display: block" (click)="dialogVisible = true" />
+              @if (item.allowInsurerLink) {
+                <p-dialog [(visible)]="dialogVisible" appendTo="body" [modal]="true" [closable]="false" header="{{ item.title }}" [style]="{ width: '30rem' }">
+                  <div class="w-full text-center">
+                    <button pButton pRipple (click)="imageClick(item.url)" icon="pi pi-external-link">{{ 'INSURE.ToInsurersWebsite' | translate }}</button>
+                  </div>
+                  @if (item.offers) {
+                    <div class="w-full text-center">
+                      <div>
+                        <button pButton class="mt-2" pRipple (click)="offersOf(item.offersUrl)" icon="pi pi-link">{{ 'INSURE.OurOffers' | translate }}</button>
+                      </div>
+                    </div>
+                  }
+                  <ng-template pTemplate="footer">
+                    <div class="w-full text-center">
+                      <button pButton pRipple icon="pi pi-times" text (click)="dialogVisible = false" label="Cancel"></button>
+                    </div>
+                  </ng-template>
+                </p-dialog>
+              }
+            </ng-template>
+            <ng-template #thumbnail let-item>
+              <div class="grid nogutter justify-center">
+                <img [src]="item.thumbnailImageSrc" style="display: block" />
+              </div>
+            </ng-template>
+          </p-galleria>
+        </div>
+    </div>
+  } @else {
+    <div style="max-width: 800px; margin: 0 auto;">
+        <div class="card">
+          <p class="text-center">
+            <i class="pi pi-spin pi-cog" style="font-size: 5rem"></i>
+          </p>
+        </div>
+    </div>
+  }
+</div>

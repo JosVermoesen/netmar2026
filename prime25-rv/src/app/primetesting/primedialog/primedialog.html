@@ -1,0 +1,67 @@
+<div class="flex flex-col gap-6 w-full sm:w-auto">
+    <h2 class="text-2xl flex justify-center font-bold mb-4">Prime Dialog Testing</h2>
+
+    <div class="flex flex-col sm:flex-row sm:items-center gap-2">
+        <p-button outlined (onClick)="showBasicDialog()" label="Basic Dialog"></p-button>
+        <p-button outlined (onClick)="showTemplateDialog()" label="Templated Dialog"></p-button>
+        <p-button outlined (onClick)="showHeadlessDialog()" label="Headless Dialog"></p-button>
+    </div>
+</div>
+
+<p-dialog [(visible)]="basicDialogVisible" [modal]="true" [closable]="false" header="Basic Dialog" [style]="{ width: '25rem' }">
+    <span class="p-text-secondary block mb-8">Update your information.</span>
+    <div class="flex items-center gap-4 mb-4">
+        <label for="username" class="font-semibold w-24">Username</label>
+        <input pInputText id="username" class="flex-auto" autocomplete="off" />
+    </div>
+    <div class="flex items-center gap-4 mb-8">
+        <label for="email" class="font-semibold w-24">Email</label>
+        <input pInputText id="email" class="flex-auto" autocomplete="off" />
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button label="Cancel" severity="secondary" (click)="basicDialogVisible = false" />
+        <p-button label="Whatever" (click)="basicDialogVisible = false" />
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="templateDialogVisible" [modal]="true" [style]="{ width: '25rem' }">
+    <ng-template #header>
+        <div class="inline-flex items-center justify-center gap-2">
+            <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
+            <span class="font-bold whitespace-nowrap">Amy Elsner</span>
+        </div>
+    </ng-template>
+    <span class="text-surface-500 dark:text-surface-400 block mb-8">Update your information.</span>
+    <div class="flex items-center gap-4 mb-4">
+        <label for="username" class="font-semibold w-24">Username</label>
+        <input pInputText id="username" class="flex-auto" autocomplete="off" />
+    </div>
+    <div class="flex items-center gap-4 mb-2">
+        <label for="email" class="font-semibold w-24">Email</label>
+        <input pInputText id="email" class="flex-auto" autocomplete="off" />
+    </div>
+    <ng-template #footer>
+        <p-button label="Cancel" [text]="true" severity="secondary" (click)="templateDialogVisible = false" />
+        <p-button label="Whatever" [outlined]="true" severity="secondary" (click)="templateDialogVisible = false" />
+    </ng-template>
+</p-dialog>
+
+<p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="headlessDialogVisible" styleClass="!border-0 !bg-transparent">
+    <ng-template #headless>
+        <div class="flex flex-col px-8 py-8 gap-6 rounded-2xl" style="border-radius: 12px; background-image: radial-gradient(circle at left top, var(--p-primary-400), var(--p-primary-700))">
+            <div class="inline-flex flex-col gap-2">
+                <label for="username" class="text-primary-50 font-semibold">Username</label>
+                <input pInputText id="username" class="bg-white/20! border-0! p-4! text-primary-50! w-80" />
+            </div>
+            <div class="inline-flex flex-col gap-2">
+                <label for="password" class="text-primary-50 font-semibold">Password</label>
+                <input pInputText id="password" class="bg-white/20! border-0! p-4! text-primary-50! w-80" type="password" />
+            </div>
+            <div class="flex items-center gap-4">
+                <p-button label="Cancel" (click)="headlessDialogVisible = false" [text]="true" styleClass="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10" class="w-full" />
+                <p-button label="Sign-In" (click)="headlessDialogVisible = false" [text]="true" styleClass="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10" class="w-full" />
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>

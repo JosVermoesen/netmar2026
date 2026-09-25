@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+      "itemImageSrc": "insurances/galleria/offers/ea/smart.png",
+      "thumbnailImageSrc": "insurances/galleria/offers/ea/smarts.png",
+      "alt": "Logo SMART",
+      "title": "Assistance SMART Jaarlijks",
+      "youTubeVideo": "",
+      "message": "",
+      "url": "https://www.europ-assistance.be/reisverzekering/jaarlijks-smart?&AgtNum=roever",
+      "offerIsInternal": false
+    },
+    {
+      "itemImageSrc": "insurances/galleria/offers/ea/europe.png",
+      "thumbnailImageSrc": "insurances/galleria/offers/ea/europes.png",
+      "alt": "Logo Pechverhelping DRIVE",
+      "title": "Pechverhelping Drive",
+      "youTubeVideo": "",
+      "message": "Pechverhelping voor al uw dagelijkse verplaatsingen met de auto",
+      "url": "https://www.europ-assistance.be/pechverhelping/drive?&AgtNum=roever",
+      "offerIsInternal": false
+    }
+  ]
+}

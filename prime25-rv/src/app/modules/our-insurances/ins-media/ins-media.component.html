@@ -1,0 +1,26 @@
+<div class="card flex justify-content-center">
+  <span class="p-float-label">
+    <p-select (ngModelChange)="onChange($event)" inputId="float-label" [options]="videos"
+      [(ngModel)]="selectedVideo" placeholder="Kies een Video m.b.t. verzekeringen" optionLabel="name">
+    </p-select>
+
+  </span>
+</div>
+<!-- <div>
+<iframe width="448" height="252" src="https://www.youtube.com/embed/SbG8oC9_AFE" frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen></iframe>
+</div> -->
+
+@if (safeUrl) {
+  <div class="card flex justify-content-center">
+    <div class="video-container relative flex justify-content-center align-items-center">
+      <iframe width="448" height="252" [src]='safeUrl' frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen></iframe>
+      <!-- <iframe width="420" height="236" [src]='safeUrl' title="YouTube video player" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen onload="this.classList.add('shadow-6')"></iframe> -->
+  </div>
+</div>
+}

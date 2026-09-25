@@ -1,0 +1,75 @@
+<div class="card">
+    <p-button (click)="onAcceptPrivacy()" class="btn btn-text" label="Ok"></p-button>
+    <div class="flex mb-4 gap-2 justify-end">
+        <p-button (onClick)="active = '0'" [rounded]="true" label="0" styleClass="w-8 h-8 p-0" [outlined]="active !== '0'" />
+        <p-button (onClick)="active = '1'" [rounded]="true" label="1" styleClass="w-8 h-8 p-0" [outlined]="active !== '1'" />
+        <p-button (onClick)="active = '2'" [rounded]="true" label="2" styleClass="w-8 h-8 p-0" [outlined]="active !== '2'" />
+    </div>
+
+    <p-accordion [(value)]="active">
+        <p-accordion-panel value="0">
+            <p-accordion-header>{{ cookiesAndPrivacy[0].header }}</p-accordion-header>
+            <p-accordion-content>
+                Voor relevante informatie op deze site en social media, plaatsen we cookies zodat:
+                <ol>
+                    <li>Onze website goed werkt en gebruiksvriendelijk is</li>
+                    <li>We de website kunnen verbeteren</li>
+                    <li>We u informatie en serviceberichten kunnen tonen op basis van de gegevens die wij van u hebben en de manier waarop u de website gebruikt</li>
+                    <li>Social media integratie (videos, deelbuttons) mogelijk is</li>
+                </ol>
+            </p-accordion-content>
+        </p-accordion-panel>
+        <p-accordion-panel value="1">
+            <p-accordion-header>{{ cookiesAndPrivacy[1].header }}</p-accordion-header>
+            <p-accordion-content>
+                Voor een aangepaste website met alle nodige functies:
+                <ol>
+                    <li>Onze website werkt gebruiksvriendelijk</li>
+                    <li>We kunnen de website verbeteren</li>
+                    <li>We kunnen u informatie en serviceberichten tonen op basis van de gegevens die wij van u hebben en de manier waarop u de website gebruikt</li>
+                </ol>
+            </p-accordion-content>
+        </p-accordion-panel>
+        <p-accordion-panel value="2">
+            <p-accordion-header>{{ cookiesAndPrivacy[2].header }}</p-accordion-header>
+            <p-accordion-content>
+                Voor een website met alle basisfuncties:
+      <ol>
+        <li>Onze website werkt goed en gebruiksvriendelijk</li>
+        <li>We kunnen de website verbeteren</li>
+      </ol>
+            </p-accordion-content>
+        </p-accordion-panel>
+    </p-accordion>
+</div>
+<!-- <p-accordion [activeIndex]="activeIndex">
+    <p-accordionTab header="{{cookiesAndPrivacy[0].header}}">
+      <p>Voor relevante informatie op deze site en social media, plaatsen we cookies zodat:
+      </p>
+      <ol>
+        <li>Onze website goed werkt en gebruiksvriendelijk is</li>
+        <li>We de website kunnen verbeteren</li>
+        <li>We u informatie en serviceberichten kunnen tonen op basis van de gegevens die wij van u hebben
+          en de manier waarop u de website gebruikt</li>
+        <li>Social media integratie (videos, deelbuttons) mogelijk is</li>
+      </ol>
+    </p-accordionTab>
+
+    <p-accordionTab header="{{cookiesAndPrivacy[1].header}}">
+      Voor een aangepaste website met alle nodige functies:
+      <ol>
+        <li>Onze website werkt gebruiksvriendelijk</li>
+        <li>We kunnen de website verbeteren</li>
+        <li>We kunnen u informatie en serviceberichten tonen op basis van de gegevens die wij van u hebben
+          en de manier waarop u de website gebruikt</li>
+      </ol>
+    </p-accordionTab>
+
+    <p-accordionTab header="{{cookiesAndPrivacy[2].header}}">
+      Voor een website met alle basisfuncties:
+      <ol>
+        <li>Onze website werkt goed en gebruiksvriendelijk</li>
+        <li>We kunnen de website verbeteren</li>
+      </ol>
+    </p-accordionTab>
+  </p-accordion> -->

@@ -1,0 +1,131 @@
+<div class="layout-topbar">
+    <div class="topbar-start">
+        <button #menubutton type="button" class="topbar-menubutton p-link p-trigger" (click)="onMenuButtonClick()">
+            <i class="pi pi-bars"></i>
+        </button>
+        <nav app-breadcrumb class="topbar-breadcrumb"></nav>
+    </div>
+
+    <div class="topbar-end">
+        <ul class="topbar-menu">
+            <!-- <li class="topbar-search">
+                <p-iconfield>
+                    <p-inputicon class="pi pi-search" />
+                    <input type="text" pInputText placeholder="Search" class="w-48 sm:w-full" />
+                </p-iconfield>
+            </li> -->
+
+            @if (useShop) { @if (cartService.itemCount() ) {
+            <li (click)="goToCart()" class="hover:cursor-pointer">
+                <p-overlaybadge value="{{cartService.itemCount()}}" severity="danger">
+                    <i class="pi pi-shopping-cart" style="font-size: 2rem"></i>
+                </p-overlaybadge>
+            </li>
+
+            } @if (!cartService.itemCount() ) {
+            <li (click)="goToCart()" class="hover:cursor-pointer">
+                <i class="pi pi-shopping-cart" style="font-size: 2rem"></i>
+            </li>
+
+            } } @if (useMar){ @if (!accountService.currentUser()) {
+            <li class="ml-3">
+                <button pButton type="button" (click)="showLogInDialog = true" icon="pi pi-fw pi-sign-in mr-1" label="{{ 'LOGIN.Label' | translate }}" class="p-button-text p-button-primary"></button>
+            </li>
+
+            } }
+
+            <li class="ml-3">
+                <p-button icon="pi pi-cog" rounded (onClick)="onConfigButtonClick()"></p-button>
+            </li>
+            @if (accountService.currentUser()) {
+            <li class="topbar-profile">
+                <button type="button" class="p-link" (click)="onProfileButtonClick()">
+                    <img src="/layout/images/avatar.png" alt="Profile" />
+                </button>
+            </li>
+            }
+        </ul>
+    </div>
+</div>
+
+<p-dialog [(visible)]="showLogInDialog" [closable]="true" [style]="{ width: '450px' }" header="Login" [modal]="true">
+    <ng-template #content>
+        <div class="text-center mb-2">
+            <img src="images/OIP.png" alt="Image" height="50" class="mb-2 block mx-auto" />
+            <div class="text-900 text-3xl font-medium mb-2">{{ 'LOGIN.Welcome' | translate }}</div>
+            <span class="text-600 font-medium line-height-2"> {{ 'LOGIN.NotYetRegistered' | translate }} </span>
+            <a (click)="onRegisterSwitch()" class="font-medium no-underline ml-2 text-blue-500 cursor-pointer"> {{ 'LOGIN.CreateAccount' | translate }} </a>
+        </div>
+        <form [formGroup]="loginForm">
+            <div class="flex flex-col gap-6">
+                <div>
+                    <label for="email" class="block font-bold mb-4">Email</label>
+                    <input formControlName="email" type="email" pInputText id="email" required autofocus fluid />
+                </div>
+                <div>
+                    <label for="password" class="block font-bold mb-4">Password</label>
+                    <p-password class="block" formControlName="password" [toggleMask]="true" />
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <p-button label="Cancel" icon="pi pi-times" text (click)="showLogInDialog = false" />
+        <p-button [disabled]="loginForm.invalid" label="Login" icon="pi pi-check" (click)="onLogInSubmit()" />
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="showCheckInDialog" [closable]="true" [style]="{ width: '450px' }" header="CheckIn Code" [modal]="true">
+    <ng-template #content>
+        <form [formGroup]="checkInForm">
+            <div class="flex flex-col gap-6">
+                <div>
+                    <label for="returnCodeToCheck" class="block font-bold mb-4">Email</label>
+                    <input formControlName="returnCodeToCheck" type="text" pInputText id="returnCodeToCheck" required autofocus fluid />
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <p-button label="Cancel" icon="pi pi-times" text (click)="showCheckInDialog = false" />
+        <p-button [disabled]="checkInForm.invalid" label="Check" icon="pi pi-check" (click)="onCheckSubmit()" />
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="showRegisterDialog" [closable]="true" [style]="{ width: '450px' }" header="Register" [modal]="true">
+    <ng-template #content>
+        <form [formGroup]="registerForm">
+            <div class="flex flex-col gap-6">
+                <div>
+                    <label for="firstName" class="block font-bold mb-4">First Name</label>
+                    <input formControlName="firstName" type="text" pInputText id="firstName" required autofocus fluid />
+                </div>
+                <div>
+                    <label for="lastName" class="block font-bold mb-4">Last Name</label>
+                    <input formControlName="lastName" type="text" pInputText id="lastName" required autofocus fluid />
+                </div>
+                <div>
+                    <label for="email" class="block font-bold mb-4">Email</label>
+                    <input formControlName="email" type="email" pInputText id="email" required autofocus fluid />
+                </div>
+                <div>
+                    <label for="berNumber" class="block font-bold mb-4">National Register</label>
+                    <input formControlName="berNumber" type="text" pInputText id="berNumber" required autofocus fluid />
+                </div>
+                <div>
+                    <p-iftalabel>
+                        <p-password [toggleMask]="true" formControlName="password" inputId="password" />
+                        <label for="password">Password</label>
+                    </p-iftalabel>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <p-button label="Cancel" icon="pi pi-times" text (click)="showRegisterDialog = false" />
+        <p-button [disabled]="registerForm.invalid" label="Register" icon="pi pi-check" (click)="onRegisterSubmit()" />
+    </ng-template>
+</p-dialog>

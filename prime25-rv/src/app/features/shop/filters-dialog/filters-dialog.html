@@ -1,0 +1,15 @@
+<div>
+    <div class="flex p-4">
+        <div class="w-1/2">
+            <h4 class="font-semibold text-xl text-primary">Brands</h4>
+            <p-listbox [options]="shopService.brands" [(ngModel)]="selectedBrands" [checkbox]="true" [multiple]="true" class="w-full md:w-56" />
+        </div>
+        <div class="w-1/2">
+            <h4 class="font-semibold text-xl text-primary">Types</h4>
+            <p-listbox [options]="shopService.types" [(ngModel)]="selectedTypes" [checkbox]="true" [multiple]="true" class="w-full md:w-56" />
+        </div>
+    </div>
+    <div class="flex justify-end p-4">
+        <p-button outlined="true" (click)="applyFilters()">Apply Filters</p-button>
+    </div>
+</div>

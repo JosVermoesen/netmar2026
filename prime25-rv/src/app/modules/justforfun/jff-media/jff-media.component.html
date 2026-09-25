@@ -1,0 +1,58 @@
+<div class="grid grid-cols-12 gap-4 card grid-nogutter" style="column-gap: 2rem; row-gap: 2rem">
+    <div class="col-span-12 mt-8">
+        <p class="text-surface-900 dark:text-surface-0 font-bold">{{ 'JFF.Title' | translate }}</p>
+        <div class="card flex justify-content-center">
+            <p-select (ngModelChange)="onChange($event)" inputId="float-label" [options]="videos" [(ngModel)]="selectedVideo" placeholder="{{ 'JFF.Select' | translate }}" optionLabel="name"> </p-select>
+        </div>
+        @if (safeUrl) {
+            <div>
+                <div class="video-container relative flex justify-content-center align-items-center">
+                    <iframe
+                        width="420"
+                        height="236"
+                        [src]="safeUrl"
+                        title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                        onload="this.classList.add('shadow-6')"
+                    ></iframe>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="card flex justify-content-center">
+    <textarea (change)="changedEditor()" id="float-input" rows="5" cols="57" pInputTextarea placeholder="{{ 'JFF.Hint' | translate }}" [(ngModel)]="value"></textarea>
+</div>
+
+<p-dialog [(visible)]="showAddToValueDialog" appendTo="body" [modal]="true" [breakpoints]="{ '480px': '75vw', '640px': '75vw' }" [style]="{ width: '40vw' }">
+    <ng-template #header>
+        <div class="flex align-items-center">
+            <span class="flex align-items-center justify-content-center bg-cyan-100 text-cyan-800 mr-3 border-circle" style="width: 32px; height: 32px">
+                <i class="pi pi-info text-lg"></i>
+            </span>
+            <span class="font-medium text-2xl text-900">Add Video to Playlist</span>
+        </div>
+    </ng-template>
+    <p class="line-height-3 p-0 m-0">Are You Sure?</p>
+
+    <ng-template #footer>
+        <div class="border-top-1 surface-border pt-3">
+            <button pButton icon="pi pi-times" (click)="showAddToValueDialog = false" text>Cancel</button>
+            <button pButton icon="pi pi-trash" (click)="addLinkToPlaylist()">Add To Playlist</button>
+        </div>
+    </ng-template>
+</p-dialog>
+
+<!-- <div style="aspect-ratio: 739 / 540; max-width: 100%; width: 100%">
+  <iframe
+    src="https://player.vimeo.com/video/1137354331?h=9a96c6271e&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+    frameborder="0"
+    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    title="Nieuw Bedrijf Aanmaken"
+    style="width: 100%; height: 100%"
+  ></iframe>
+</div> -->

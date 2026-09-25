@@ -1,0 +1,21 @@
+<!-- Make sure to import the ScrollingModule from '@angular/cdk/scrolling' in your module -->
+<div>
+  <h3 class="text-3xl text-center pt-6 mb-3">Filters</h3>
+  <mat-divider></mat-divider>
+  <div class="flex p-4">
+    <div class="w-full pr-2">
+      <h4 class="font-semibold text-xl text-primary">PostalCodes</h4>
+      <div class="flex justify-end p-4">
+        <button mat-flat-button (click)="applyFilters()">Apply Filters</button>
+      </div>
+      <cdk-virtual-scroll-viewport itemSize="48" style="height: 300px">
+        <mat-selection-list [(ngModel)]="selectedPostalCodes" [multiple]="true">
+          @for (postalCode of sortedPostalCodes; track $index)
+          {
+          <mat-list-option [value]="postalCode">{{postalCode}}</mat-list-option>
+          }
+        </mat-selection-list>
+      </cdk-virtual-scroll-viewport>
+    </div>
+  </div>
+</div>

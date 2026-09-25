@@ -1,0 +1,72 @@
+<div class="accounting-page">
+    @if (contentfulContractTypesHtml && contentfulUpdatesHtml) {
+        <div class="card">
+            <p-tabs [(value)]="valueTab" [scrollable]="true">
+                <p-tablist>
+                    <p-tab value="0">Tarieven</p-tab>
+                    <p-tab value="1">Contract Types</p-tab>
+                    <p-tab value="2">Update Historiek</p-tab>
+                </p-tablist>
+                <p-tabpanels>
+                    <p-tabpanel value="0">
+                        <div class="card border-primary mb-resp">
+                            <div class="pricing-table-shell">
+                                <div class="pricing-table-header">
+                                    <div>
+                                        <h3 class="pricing-table-title">Overzicht tarieven</h3>
+                                        <p class="pricing-table-subtitle">Jaarlijkse en maandelijkse kost per contracttype.</p>
+                                    </div>
+                                </div>
+
+                                <p-table [value]="pricingRows" [tableStyle]="{ 'min-width': '42rem' }">
+                                    <ng-template #header>
+                                        <tr>
+                                            <th>Contract type</th>
+                                            <th class="price-column">Per jaar</th>
+                                            <th class="price-column">Maandelijks</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template #body let-row>
+                                        <tr>
+                                            <td>{{ row.contractType }}</td>
+                                            <td class="price-column">{{ row.yearlyPrice }}</td>
+                                            <td class="price-column" [class.price-empty]="row.monthlyPrice === '-'">{{ row.monthlyPrice }}</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </p-tabpanel>
+
+                    <p-tabpanel value="1">
+                        <div class="card border-primary mb-resp">
+                            @if (contentfulContractTypesHtml) {
+                                <div class="ml-3 mt-3 mr-3">
+                                    <div class="md-content" [innerHTML]="contentfulContractTypesHtml"></div>
+                                </div>
+                            }
+                        </div>
+                    </p-tabpanel>
+
+                    <p-tabpanel value="2">
+                        <div class="card border-primary mb-resp">
+                            @if (contentfulUpdatesHtml) {
+                                <div class="ml-3 mt-3 mr-3">
+                                    <div class="md-content" [innerHTML]="contentfulUpdatesHtml"></div>
+                                </div>
+                            }
+                        </div>
+                    </p-tabpanel>
+                </p-tabpanels>
+            </p-tabs>
+        </div>
+    } @else {
+        <div style="max-width: 800px; margin: 0 auto">
+            <div class="card">
+                <p class="text-center">
+                    <i class="pi pi-spin pi-cog" style="font-size: 5rem"></i>
+                </p>
+            </div>
+        </div>
+    }
+</div>

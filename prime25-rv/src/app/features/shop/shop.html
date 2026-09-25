@@ -1,0 +1,54 @@
+<div class="shop-page">
+    @if (products()) { @if (products(); as products) { @if (products.count > 0) {
+    <div class="flex items-center justify-center">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full">
+            <p-paginator
+                (onPageChange)="onPageChange($event)"
+                [first]="1"
+                [rows]="shopParams.pageSize"
+                [totalRecords]="products.count"
+                [rowsPerPageOptions]="pageSizeOptions"
+                [showCurrentPageReport]="false"
+                [showFirstLastIcon]="true"
+                [showPageLinks]="true"
+                [showJumpToPageDropdown]="true"
+                [showJumpToPageInput]="false"
+            >
+            </p-paginator>
+
+            <form #searchForm="ngForm" (ngSubmit)="onSearchChange()" class="flex gap-2">
+                <input type="search" class="block w-full p-2 text-sm ml-2" placeholder="Search" name="search" [(ngModel)]="shopParams.search" />
+                <p-button type="submit" icon="pi pi-search" [outlined]="true" />
+            </form>
+
+            <p-button outlined="true" class="ml-2" (click)="openFiltersDialog()">
+                <i class="pi pi-filter"></i>
+                Filters
+            </p-button>
+
+            <p-select [(ngModel)]="sortKey" [options]="sortOptions" optionLabel="name" optionValue="value" placeholder="Sort By" class="w-full md:w-60 ml-2" (onChange)="onSortChange($event)" />
+        </div>
+    </div>
+
+    <div class="card mt-1">
+        <div class="grid grid-cols-12 gap-4 -mt-4 -ml-4 -mr-4">
+            @for (product of products.data; track product) {
+            <div class="col-span-12 md:col-span-6 lg:col-span-4">
+                <app-product-item [product]="product"></app-product-item>
+            </div>
+            }
+        </div>
+    </div>
+    } @else {
+    <app-empty-state message="No products match this filter" icon="filter_alt_off" actionText="Reset filters" />
+    }} } @else {
+    <div style="max-width: 800px; margin: 0 auto">
+        <div class="card">
+            <p class="text-center">
+                <i class="pi pi-spin pi-cog" style="font-size: 5rem"></i>
+            </p>
+        </div>
+    </div>
+    }
+</div>
+
